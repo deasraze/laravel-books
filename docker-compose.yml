@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: docker/nginx/nginx.docker
+    container_name: nginx
+    volumes:
+      - ./:/var/www:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    ports:
+      - "8080:443"
+
+  app:
+    build:
+      context: ./
+      dockerfile: docker/php-fpm/php-fpm.docker
+      args:
+        - USER_ID
+        - GROUP_ID
+    container_name: app
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - mysql
+
+  php-cli:
+    build:
+      context: ./
+      dockerfile: docker/php-cli/php-cli.docker
+      args:
+        - USER_ID
+        - GROUP_ID
+    container_name: php-cli
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    volumes:
+      - ./storage/docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - 33061:3306
+
+  node:
+    user: ${USER_ID}:${GROUP_ID}
+    image: node:16-alpine3.11
+    container_name: node
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www

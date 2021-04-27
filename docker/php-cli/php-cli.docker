@@ -1,0 +1,10 @@
+FROM php:7.4.16-cli
+
+ARG USER_ID
+ARG GROUP_ID
+
+RUN docker-php-ext-install pdo_mysql
+
+WORKDIR /var/www
+
+USER "${USER_ID}:${GROUP_ID}"
