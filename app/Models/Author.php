@@ -20,6 +20,11 @@ class Author extends Model
 
     protected $casts = ['birth_year' => 'date:d.m.Y'];
 
+    public function addBook(int $id): void
+    {
+        $this->books()->attach($id);
+    }
+
     public function getFullNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
