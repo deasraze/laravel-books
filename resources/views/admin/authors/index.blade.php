@@ -3,7 +3,9 @@
 @section('content')
     @include('admin.authors._nav')
 
-    <table class="table table-striped">
+    <p><a href="{{ route('admin.authors.create') }}" class="btn btn-success">Add Author</a></p>
+
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>ID</th>
@@ -15,14 +17,17 @@
         </thead>
         <tbody>
 
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-
+        @foreach($authors as $author)
+            <tr>
+                <td>{{ $author->id }}</td>
+                <td>{{ $author->first_name }}</td>
+                <td>{{ $author->last_name }}</td>
+                <td>{{ $author->birth_year }}</td>
+                <td>123</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
+
+    {{ $authors->links() }}
 @endsection

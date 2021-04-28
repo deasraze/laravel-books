@@ -3,7 +3,9 @@
 @section('content')
     @include('admin.books._nav')
 
-    <table class="table table-striped">
+    <p><a href="{{ route('admin.books.create') }}" class="btn btn-success">Add Book</a></p>
+
+    <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>ID</th>
@@ -15,14 +17,18 @@
         </thead>
         <tbody>
 
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        @foreach($books as $book)
+            <tr>
+                <td>{{ $book->id }}</td>
+                <td>{{ $book->title }}</td>
+                <td>as</td>
+                <td>{{ $book->publishing }}</td>
+                <td>{{ $book->publish_date }}</td>
+            </tr>
+        @endforeach
 
         </tbody>
     </table>
+
+    {{ $books->links() }}
 @endsection
