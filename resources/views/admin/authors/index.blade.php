@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ $author->id }}</td>
                 <td>
-                    <a href="{{ route('authors.show', $author) }}">{{ $author->full_name }}</a>
+                    <a href="{{ route('authors.show', $author) }}" target="_blank">{{ $author->full_name }}</a>
                 </td>
                 <td>{{ $author->birth_year }}</td>
                 <td>{{ $author->books_count }}</td>

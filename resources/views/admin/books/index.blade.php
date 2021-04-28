@@ -21,11 +21,11 @@
             <tr>
                 <td>{{ $book->id }}</td>
                 <td>
-                    <a href="{{ route('books.show', $book) }}">{{ $book->title }}</a>
+                    <a href="{{ route('books.show', $book) }}" target="_blank">{{ $book->title }}</a>
                 </td>
                 <td>
                     @foreach($book->authors as $author)
-                        <a href="{{ route('authors.show', $author) }}">{{ $author->full_name }}</a>
+                        <a href="{{ route('authors.show', $author) }}" target="_blank">{{ $author->full_name }}</a>
                         <br>
                     @endforeach
                 </td>

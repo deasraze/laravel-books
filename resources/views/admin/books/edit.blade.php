@@ -24,7 +24,7 @@
         <div class="form-group">
             <label for="publish_date">Publication date</label>
             <input class="form-control @error('publish_date') is-invalid @enderror" type="date"
-                   name="publish_date" id="publish_date" value="{{ old('publish_date', $book->publish_date) }}" required>
+                   name="publish_date" id="publish_date" value="{{ old('publish_date', $book->publish_date_form) }}" required>
             @error('publish_date')
             <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
             @enderror
@@ -33,9 +33,11 @@
             <label for="authors">Authors</label>
             <select class="custom-select @error('authors.*') is-invalid @enderror"
                     name="authors[]" id="authors" required multiple>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                @foreach($authors as $author)
+                    <option {{ in_array($author->id, old('authors', $bookAuthors)) ? ' selected' : ''}} value="{{ $author->id }}">
+                        {{ $author->full_name }}
+                    </option>
+                @endforeach
             </select>
             @error('authors.*')
             <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
