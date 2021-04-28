@@ -33,7 +33,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rolesList(): array
+    public static function rolesList(): array
     {
         return [
             self::ROLE_ADMIN => 'Administrator',
