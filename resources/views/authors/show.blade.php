@@ -1,14 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.authors.edit', $author) }}" class="btn btn-primary mr-1">Edit</a>
-        <form method="POST" action="{{ route('admin.authors.destroy', $author) }}" class="mr-1">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger">Delete</button>
-        </form>
-    </div>
-
+    @can('admin-panel')
+        <div class="d-flex flex-row mb-3">
+            <a href="{{ route('admin.authors.edit', $author) }}" class="btn btn-primary mr-1">Edit</a>
+            <form method="POST" action="{{ route('admin.authors.destroy', $author) }}" class="mr-1">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    @endcan
     <table class="table table-bordered table-striped">
         <tbody>
         <tr>
