@@ -33,7 +33,7 @@ Route::group(
     function () {
         Route::get('/', 'HomeController@index')->name('home');
 
-        Route::resource('books', 'BookController')->except('show');
-        Route::resource('authors', 'AuthorController')->except('show');
+        Route::resource('books', 'Books\\BookController')->except('show');
+        Route::resource('authors', 'Authors\\AuthorController')->except('show');
     }
 );
