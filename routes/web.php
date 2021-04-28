@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Authors\AuthorController;
 use App\Http\Controllers\Books\BookController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ Route::get('/', [BookController::class, 'index'])->name('home');
 
 Auth::routes();
 
+Route::get('authors/show/{author}', [AuthorController::class, 'show'])->name('authors.show');
+Route::get('books/show/{book}', [BookController::class, 'show'])->name('books.show');
+
 Route::group(
     [
         'prefix' => 'admin',
@@ -28,7 +32,7 @@ Route::group(
     function () {
         Route::get('/', 'HomeController@index')->name('home');
 
-        Route::resource('books', 'BookController');
-        Route::resource('authors', 'AuthorController');
+        Route::resource('books', 'BookController')->except('show');
+        Route::resource('authors', 'AuthorController')->except('show');
     }
 );
