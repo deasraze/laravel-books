@@ -30,4 +30,9 @@ class Book extends Model
     {
         return (new Carbon($value))->format('d.m.Y');
     }
+
+    public function getPublishDateFormAttribute(): string
+    {
+        return (new Carbon($this->publish_date))->format('Y-m-d');
+    }
 }
