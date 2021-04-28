@@ -30,6 +30,11 @@ class Author extends Model
         return (new Carbon($value))->format('d.m.Y');
     }
 
+    public function getBirthYearFormAttribute(): string
+    {
+        return (new Carbon($this->birth_year))->format('Y-m-d');
+    }
+
     public function books()
     {
         return $this->belongsToMany(Book::class);
