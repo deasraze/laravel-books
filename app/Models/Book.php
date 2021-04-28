@@ -23,7 +23,7 @@ class Book extends Model
 
     public function authors()
     {
-        $this->belongsToMany(Author::class);
+        return $this->belongsToMany(Author::class);
     }
 
     public function getPublishDateAttribute($value): string
