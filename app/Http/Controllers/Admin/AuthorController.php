@@ -3,42 +3,54 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Authors\AuthorRequest;
+use App\Models\Author;
+use App\UseCases\Authors\AuthorService;
 
 class AuthorController extends Controller
 {
+    private AuthorService $service;
+
+    public function __construct(AuthorService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        //
+        $authors = Author::withCount('books')->orderByDesc('id')->paginate(10);
+
+        return view('admin.authors.index', compact('authors'));
     }
 
     public function create()
     {
-        //
+        return view('admin.authors.create');
     }
 
-    public function store(Request $request)
+    public function store(AuthorRequest $request)
     {
-        //
+        $author = $this->service->create($request);
+
+        return redirect()->route('authors.show', $author);
     }
 
-    public function show($id)
+    public function edit(Author $author)
     {
-        //
+        return view('admin.authors.edit', compact('author'));
     }
 
-    public function edit($id)
+    public function update(AuthorRequest $request, Author $author)
     {
-        //
+        $this->service->edit($request, $author->id);
+
+        return redirect()->route('authors.show', $author);
     }
 
-    public function update(Request $request, $id)
+    public function destroy(Author $author)
     {
-        //
-    }
+        $this->service->remove($author->id);
 
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('admin.authors.index');
     }
 }
