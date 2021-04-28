@@ -9,8 +9,7 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Name</th>
             <th>Date of birth</th>
             <th>Number of books</th>
         </tr>
@@ -20,10 +19,11 @@
         @foreach($authors as $author)
             <tr>
                 <td>{{ $author->id }}</td>
-                <td>{{ $author->first_name }}</td>
-                <td>{{ $author->last_name }}</td>
+                <td>
+                    <a href="{{ route('authors.show', $author) }}">{{ $author->full_name }}</a>
+                </td>
                 <td>{{ $author->birth_year }}</td>
-                <td>123</td>
+                <td>{{ $author->books_count }}</td>
             </tr>
         @endforeach
         </tbody>

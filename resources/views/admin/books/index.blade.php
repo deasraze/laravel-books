@@ -20,8 +20,15 @@
         @foreach($books as $book)
             <tr>
                 <td>{{ $book->id }}</td>
-                <td>{{ $book->title }}</td>
-                <td>as</td>
+                <td>
+                    <a href="{{ route('books.show', $book) }}">{{ $book->title }}</a>
+                </td>
+                <td>
+                    @foreach($book->authors as $author)
+                        <a href="{{ route('authors.show', $author) }}">{{ $author->full_name }}</a>
+                        <br>
+                    @endforeach
+                </td>
                 <td>{{ $book->publishing }}</td>
                 <td>{{ $book->publish_date }}</td>
             </tr>

@@ -2,7 +2,7 @@
 
 @section('content')
     @include('admin.books._nav')
-    <form method="POST" action="{{ route('admin.books.update') }}">
+    <form method="POST" action="{{ route('admin.books.update', $book) }}">
         @csrf
         @method('PUT')
         <div class="form-group">

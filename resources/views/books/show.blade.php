@@ -33,25 +33,18 @@
 
     <table class="table table-bordered">
         <thead>
+        <tr><th colspan="4">Authors</th></tr>
         <tr>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Name</th>
             <th>Year of birth</th>
         </tr>
         </thead>
         <tbody>
-
-        <tr><th colspan="4">Authors</th></tr>
         @forelse ($authors as $author)
             <tr>
                 <td>
-                    <a href="#">
-                        {{ $author->first_name }}
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        {{ $author->last_name }}
+                    <a href="{{ route('authors.show', $author) }}">
+                        {{ $author->full_name }}
                     </a>
                 </td>
                 <td>{{ $author->birth_year }}</td>

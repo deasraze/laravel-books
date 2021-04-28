@@ -30,6 +30,7 @@
 
     <table class="table table-bordered">
         <thead>
+        <tr><th colspan="4">Books</th></tr>
         <tr>
             <th>Title</th>
             <th>Publishing house</th>
@@ -38,11 +39,10 @@
         </thead>
         <tbody>
 
-        <tr><th colspan="4">Authors</th></tr>
         @forelse ($books as $book)
             <tr>
                 <td>
-                    <a href="#">
+                    <a href="{{ route('books.show', $book) }}">
                         {{ $book->title }}
                     </a>
                 </td>

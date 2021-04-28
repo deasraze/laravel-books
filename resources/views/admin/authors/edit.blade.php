@@ -2,7 +2,7 @@
 
 @section('content')
     @include('admin.authors._nav')
-    <form method="POST" action="{{ route('admin.authors.update') }}">
+    <form method="POST" action="{{ route('admin.authors.update', $author) }}">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -24,7 +24,7 @@
         <div class="form-group">
             <label for="birth_year">Year of birth</label>
             <input class="form-control @error('birth_year') is-invalid @enderror" type="date"
-                   name="birth_year" id="birth_year" value="{{ old('birth_year', $author->birth_year) }}" required>
+                   name="birth_year" id="birth_year" value="{{ old('birth_year', $author->birth_year_form) }}" required>
             @error('birth_year')
             <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
             @enderror
