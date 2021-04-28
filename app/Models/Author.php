@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,14 +10,28 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $first_name
  * @property string $last_name
- * @property string $birth_year
+ * @property Carbon $birth_year
  */
 class Author extends Model
 {
     use HasFactory;
 
-    public function getFullName(): string
+    protected $guarded = ['id'];
+
+    protected $casts = ['birth_year' => 'date:d.m.Y'];
+
+    public function getFullNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getBirthYearAttribute($value): string
+    {
+        return (new Carbon($value))->format('d.m.Y');
+    }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
     }
 }
