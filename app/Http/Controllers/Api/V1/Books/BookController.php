@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api\V1\Books;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Books\BookRequest;
-use App\Http\Resources\Books\BookDetailResource;
-use App\Http\Resources\Books\BookListResource;
 use App\Models\Book;
+use App\Transformers\Books\BookDetailTransformer;
+use App\Transformers\Books\BookListTransformer;
 use App\UseCases\Books\BookService;
 use Illuminate\Http\Response;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class BookController extends Controller
 {
@@ -21,21 +22,29 @@ class BookController extends Controller
 
     public function list()
     {
-        $books = Book::with('authors')->orderByDesc('id')->paginate(10);
+        $paginator = Book::with('authors')->orderByDesc('id')->paginate(10);
+        $books = $paginator->getCollection();
 
-        return BookListResource::collection($books);
+        return fractal($books, BookListTransformer::class)
+            ->paginateWith(new IlluminatePaginatorAdapter($paginator))
+            ->withResourceName('books')
+            ->respond();
     }
 
-    public function book(Book $book): BookDetailResource
+    public function book(Book $book)
     {
-        return new BookDetailResource($book);
+        return fractal($book, BookDetailTransformer::class)
+            ->withResourceName('books')
+            ->respond();
     }
 
-    public function update(BookRequest $request, Book $book): BookDetailResource
+    public function update(BookRequest $request, Book $book)
     {
         $this->service->edit($request, $book->id);
 
-        return new BookDetailResource(Book::findOrFail($book->id));
+        return fractal(Book::findOrFail($book->id), BookDetailTransformer::class)
+            ->withResourceName('books')
+            ->respond();
     }
 
     public function remove(Book $book)
